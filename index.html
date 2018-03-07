@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Google Map</title>
+  <style>
+    #map{
+      height:600px;
+      width:100%;
+    }
+  </style>
+</head>
+<body>
+	<div id="map"></div>
+  <script>
+    function initMap(){
+      var options = {
+        zoom:8,
+        center:{lat:30.035278,lng: 31.231112}
+      }
+
+      
+      var map = new google.maps.Map(document.getElementById('map'), options);
+      google.maps.event.addListener(map, 'click', function(event){
+        // Add marker
+        addMarker({coords:event.latLng});
+      });
+     
+      var markers = [
+        {
+          coords:{lat:31.205753,lng:29.924526},
+          content:'<h1>Alex is the best way to travell and speend the time</h1>'
+        },
+        {
+          coords:{lat:29.97371,lng:32.52627},
+          content:'<h1>Suez is a global expert in the water and waste sectors, Suez helps cities and industries in the circular economy to preserve</h1>', 
+        },
+        {
+          coords:{lat:30.056021,lng:30.976639} ,
+			content:'<h1>6th of October is a city in Giza Governorate, a satellite town and part of the urban area of Cairo, Egypt, 32 km (20 miles) outside the city.</h1>'
+        },
+		  {
+          coords:{lat:31.25654,lng:32.28411} ,
+			content:'<h1>.</h1>'
+        },
+		  {
+          coords:{lat:31.032955,lng:31.391224} ,
+			content:'<h1>El-Mansoura is a city in Egypt, with a population of 960,423.</h1>'
+        },
+      ];
+
+      // Loop through markers
+      for(var i = 0;i < markers.length;i++){
+        // Add marker
+        addMarker(markers[i]);
+      }
+
+      // Add Marker Function
+      function addMarker(props){
+        var marker = new google.maps.Marker({
+          position:props.coords,
+          map:map,
+          
+        });
+
+        // Check content
+        if(props.content){
+          var infoWindow = new google.maps.InfoWindow({
+            content:props.content
+          });
+
+          marker.addListener('click', function(){
+            infoWindow.open(map, marker);
+			  
+          });
+        }
+      }
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwP-_4kRCtzlITzu7Vp8EllkCukBtHSwM&callback=initMap">
+    </script>
+	<script src="knockout-3.4.2.js"></script>
+</body>
+</html>
